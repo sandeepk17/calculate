@@ -24,16 +24,6 @@ pipeline {
                 sh 'mvn -f maths/pom.xml clean test'
             }
         }
-        
-        stage("sonar_static_check"){
-            steps{
-		withSonarQubeEnv('MySonarQube') {
-                    // Optionally use a Maven environment you've configured already
-                    sh 'mvn -f maths/pom.xml clean sonar:sonar -Dmaven.test.skip=true'
-                }
-            }
-
-        }
 	
 	stage("Quality Gate") {
             steps {
@@ -50,7 +40,7 @@ pipeline {
             steps {
                 rtServer (
                     id: "ARTIFACTORY_SERVER",
-                    url: "http://artifactory:8081/artifactory",
+                    url: "http://192.168.0.106:8082/artifactory",
 		    credentialsId: 'admin.jfrog'
                 )
 
